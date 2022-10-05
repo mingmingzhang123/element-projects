@@ -23,11 +23,12 @@
         </el-form-item>
         <el-form-item prop="code">
           <el-input
-            style="width: 300px"
+          class="ipt"
+            style="width: 200px"
             v-model="LoginForm.code"
             placeholder="请输入验证码"
           ></el-input>
-          <img :src="images" />
+          <img :src="images" @click="handleGetimg" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')"
@@ -46,8 +47,8 @@ export default {
     return {
       // 登录表单
       LoginForm: {
-        username: "",
-        password: "",
+        username: "admin",
+        password: "1234",
         code: "",
       },
       images: "",
@@ -75,8 +76,9 @@ export default {
       let a = `username=${this.LoginForm.username}&password=${this.LoginForm.password}&code=${this.LoginForm.code}`;
       const token = await this.$store.dispatch("login", a);
       //   跳转主页
-      this.$router.push("/");
       if (!token) return;
+      this.$message.success('登录成功')
+      this.$router.push("/");
     },
     // 重置
     resetForm(formName) {
@@ -86,9 +88,10 @@ export default {
     async handleGetimg() {
       const response = await getImage();
       this.images = window.URL.createObjectURL(response.data);
-      console.log(response);
+      console.log(this.images);
     },
   },
+  
   created() {
     this.handleGetimg();
   },
@@ -110,5 +113,10 @@ export default {
       font-size: 30px;
     }
   }
+  img{
+    vertical-align: middle;
+    padding-left: 40px;
+  }
+  
 }
 </style>

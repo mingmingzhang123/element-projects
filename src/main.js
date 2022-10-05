@@ -6,6 +6,9 @@ import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+import Fragment from 'vue-fragment'
+Vue.use(Fragment.Plugin)
+
 Vue.use(ElementUI);
 import "./style/reset.css"
 
