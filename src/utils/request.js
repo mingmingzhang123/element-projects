@@ -1,9 +1,10 @@
 // 引入axios
 import axios from "axios"
 import store from "../store"
+import { GetToken } from "./auth";
 const service = axios.create({
     // 基准地址
-    baseURL: 'http://119.45.133.128:8098/api/',
+    baseURL: process.env.VUE_APP_BASE_API,
     // 请求超时
     timeout: 5000
 
@@ -12,7 +13,7 @@ const service = axios.create({
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
     // 获取vuex中的token
-    const token = store.getters.token
+    const token = GetToken()
     if (token) {
         config.headers.token = token
     }
@@ -39,4 +40,14 @@ service.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-export default service
+// 统一传参方式
+const request = (options) => {
+    options.method = options.method || 'GET'
+    if (options.method.toLowerCase() === 'get') {
+        options.params = options.data
+    }
+    return service(options)
+
+}
+
+export default request

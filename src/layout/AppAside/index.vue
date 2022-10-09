@@ -1,6 +1,7 @@
 <template>
   <div>
     <menu-bar :defaultactive="defaultactive"></menu-bar>
+    
   </div>
 </template>
 <script>

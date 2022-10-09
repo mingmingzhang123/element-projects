@@ -1,5 +1,5 @@
 <template>
     <div>
-         我是权限管理
+        404
     </div>
 </template>

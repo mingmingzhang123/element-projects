@@ -5,10 +5,11 @@ import store from './store'
 // 引入elementui
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
 import Fragment from 'vue-fragment'
+// 引入页面鉴权
+import "../permission"
 Vue.use(Fragment.Plugin)
-
+import "./directive/buttonPermission"
 Vue.use(ElementUI);
 import "./style/reset.css"
 

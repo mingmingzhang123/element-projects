@@ -7,6 +7,7 @@
 export default {
   created() {
     this.$store.commit("Tags/getTags");
+   
   },
 };
 </script>

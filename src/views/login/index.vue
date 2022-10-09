@@ -23,7 +23,7 @@
         </el-form-item>
         <el-form-item prop="code">
           <el-input
-          class="ipt"
+            class="ipt"
             style="width: 200px"
             v-model="LoginForm.code"
             placeholder="请输入验证码"
@@ -73,11 +73,10 @@ export default {
     // 登录
     async handleLogin() {
       // 调用vuex中登录接口
-      let a = `username=${this.LoginForm.username}&password=${this.LoginForm.password}&code=${this.LoginForm.code}`;
-      const token = await this.$store.dispatch("login", a);
+      const token = await this.$store.dispatch("login", this.LoginForm);
       //   跳转主页
       if (!token) return;
-      this.$message.success('登录成功')
+      this.$message.success("登录成功");
       this.$router.push("/");
     },
     // 重置
@@ -86,12 +85,27 @@ export default {
     },
     // 获取验证码图片
     async handleGetimg() {
-      const response = await getImage();
-      this.images = window.URL.createObjectURL(response.data);
-      console.log(this.images);
+      try {
+        const response = await getImage();
+        // 获取图片数据流
+        const arrayBuffer = response.data;
+        // 定义base64
+        const imageData =
+          "data:image/png;base64," +
+          btoa(
+            new Uint8Array(arrayBuffer).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ""
+            )
+          );
+        // 将base64图片赋值给 保存验证码的变量
+        this.images = imageData;
+      } catch (e) {
+        console.log(e.message);
+      }
     },
   },
-  
+
   created() {
     this.handleGetimg();
   },
@@ -113,10 +127,9 @@ export default {
       font-size: 30px;
     }
   }
-  img{
+  img {
     vertical-align: middle;
     padding-left: 40px;
   }
-  
 }
 </style>

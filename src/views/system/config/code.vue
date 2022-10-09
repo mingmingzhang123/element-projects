@@ -1,5 +1,5 @@
 <template>
     <div>
-         我是机构管理
+        "日志管理"
     </div>
 </template>
